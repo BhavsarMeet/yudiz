@@ -1,0 +1,54 @@
+<div class="container ">
+
+    <form [formGroup]="orderForm" (ngSubmit)="submit()">
+        
+        <div *ngIf="step==1" >
+            <h4>step 1</h4>
+            <div class="form-group">
+                <label for="meal">please select a meal</label>
+                <select class="form-control" formControlName="meal">
+                    <option value="null">select one</option>
+                    <option value="lunch">lunch</option>
+                    <option value="breakfast">breakfast</option>
+                    <option value="dinner">dinner</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="persons">please enter number of people</label>
+                <input type="number" class="form-control" formControlName="persons" max="10">
+            </div>
+        </div>
+
+        <div *ngIf="step==2" >
+            <h4>step 2</h4>
+            <div class="form-group">
+                <label for="restaurant">please select a restaurant</label>
+                <select class="form-control" formControlName="restaurantName" >
+                    <option *ngFor="let res of restaurantList" [value]="res.restaurant">{{res.restaurant}}</option>
+                    
+                </select>
+            </div>
+        </div>
+
+        <div *ngIf="step==3"  formArrayName="dishDetails">
+            <h4>step 3</h4>
+            <div class="form-group">
+                <label for="dish">please select a dish</label>
+                <select class="form-control" >
+                    <option *ngFor="let dish of dishes" [value]="dish.name">{{dish.name}}</option>
+                   
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="servings">please enter number of servings</label>
+                <input type="number" class="form-control" max="10" >
+            </div>
+        </div>
+
+            <a class="btn btn-outline-primary mx-2 my-2" *ngIf="step!=1" (click)="previous()">previous</a>
+            <button type="submit" class="btn btn-outline-primary mx-2 my-2" *ngIf="step!=4">next</button>
+            <button type="submit" class="btn btn-outline-primary mx-2 my-2" *ngIf="step==4">submit</button>
+   
+             <pre>  {{orderForm.value | json}} </pre> 
+    </form>
+</div>
